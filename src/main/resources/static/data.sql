@@ -1,0 +1,9 @@
+insert into TB_BANK (B_NAME, BANK_CODE) values ('주택도시기금', 'bnk093');
+insert into TB_BANK (B_NAME, BANK_CODE) values ('국민은행', 'bnk004');
+insert into TB_BANK (B_NAME, BANK_CODE) values ('우리은행', 'bnk020');
+insert into TB_BANK (B_NAME, BANK_CODE) values ('신한은행', 'bnk088');
+insert into TB_BANK (B_NAME, BANK_CODE) values ('한국시티은행', 'bnk027');
+insert into TB_BANK (B_NAME, BANK_CODE) values ('하나은행', 'bnk081');
+insert into TB_BANK (B_NAME, BANK_CODE) values ('농협은행/수협은행', 'bnk011');
+insert into TB_BANK (B_NAME, BANK_CODE) values ('외환은행', 'bnk005');
+insert into TB_BANK (B_NAME, BANK_CODE) values ('기타은행', 'bnk400');
