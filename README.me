@@ -1,0 +1,18 @@
+h2. API Document
+*# 데이터 파일에서 각 레코드를 데이터베이스에 저장하는 API 개발
+*#* POST - http://{ip}:8080/fileupload
+*#* RequsetBODY - Content-Type:"multipart/form-data;charset=UTF-8"
+*#* PARAM - { "file" : "{file name}" }
+*# 주택금융 공급 금융기관(은행) 목록을 출력하는 API 를 개발
+*#* GET - http://{ip}:8080/banks
+*# 년도별 각 금융기관의 지원금액 합계를 출력하는 API 를 개발
+*#* GET - http://{ip}:8080/banks/finance/total
+*# 각년도별각기관의전체지원금액중에서가장큰금액의기관명을출력하는API개발
+*#* POST - http://{ip}:8080/banks/finance/top
+*#* PARAM - { "year": {year} }
+*# 전체 년도(2005~2016)에서 외환은행의 지원금액 평균 중에서 가장 작은 금액과 큰 금액을 출력하는 API 개발
+*#* POST - http://{ip}:8080/banks/finance/avg
+*#* PARAM - { "bankName" : "{bank name}"  }
+*# 특정 은행의 특정 달에 대해서 2018년도 해당 달에 금융지원 금액을 예측하는 API 개발
+*#* POST - http://{ip}:8080/banks/prediction
+*#* PARAM - { "bankName" : "{bank name}", "month" : {month} }
