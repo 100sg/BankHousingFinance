@@ -1,5 +1,6 @@
 package skbaek.homework.demo.util;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvParser;
@@ -14,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-@Component
 public class FileCsvParser {
 
     public <T> List<T> read(Class<T> classType, MultipartFile file, CsvSchema schema) {

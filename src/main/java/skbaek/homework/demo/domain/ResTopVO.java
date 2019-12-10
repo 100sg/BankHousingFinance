@@ -15,12 +15,4 @@ public class ResTopVO {
         this.total = total;
     }
 
-    @Override
-    public String toString() {
-        return "Test{" +
-                "bankName='" + bankName + '\'' +
-                ", year=" + year +
-                ", total=" + total +
-                '}';
-    }
 }

@@ -57,7 +57,7 @@ public class HousingFinanceController {
 
     @PostMapping("/banks/finance/top")
     public ResponseEntity bankFinanceTop(@RequestBody RequestVO param) throws Exception {
-        ApiResponseVO<List<ResultTypeVO>> res = new ApiResponseVO<>();
+        ApiResponseVO<List<ResTopVO>> res = new ApiResponseVO<>();
         res.setTitle("연도별 최대 지원금액");
         res.setData(bankHousingFinanceService.getBankFinanceTop(param));
 
@@ -70,7 +70,7 @@ public class HousingFinanceController {
 
     @PostMapping("/banks/finance/avg")
     public ResponseEntity supportFinanceAvgMaxMin(@RequestBody RequestVO param) throws Exception {
-        ApiResponseVO<List<ResultTypeVO>> res = new ApiResponseVO<>();
+        ApiResponseVO<List<ResAvgVO>> res = new ApiResponseVO<>();
         res.setBankResultOK(param.getBankName(), bankHousingFinanceService.getSupportFinanceAvgMaxMin(param));
         res.setData(bankHousingFinanceService.getSupportFinanceAvgMaxMin(param));
         return ResponseEntity.ok(res);
