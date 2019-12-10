@@ -35,7 +35,7 @@ public class HousingFinanceController {
     public ResponseEntity uploadFile(@RequestBody MultipartFile file) throws Exception {
         ApiResponseVO res = new ApiResponseVO();
         uploadService.upload(file);
-        res.setResultOK(HttpStatus.CREATED);
+        res.setResultOK(HttpStatus.OK);
         return ResponseEntity.ok( res );
     }
 
@@ -52,7 +52,6 @@ public class HousingFinanceController {
         ApiResponseVO<List<ResDetailTotalAmountVO>> res = new ApiResponseVO<>();
         res.setTitle("연도별 주택금융 공급현황");
         res.setData(bankHousingFinanceService.getListBanksFinanceTotal());
-        int a = 1/0;
         return ResponseEntity.ok( res );
     }
 
