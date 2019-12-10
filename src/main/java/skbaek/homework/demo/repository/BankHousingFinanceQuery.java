@@ -1,6 +1,8 @@
 package skbaek.homework.demo.repository;
 
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.JDBCException;
+import org.springframework.context.ApplicationContextException;
 import org.springframework.stereotype.Repository;
 import skbaek.homework.demo.domain.*;
 
@@ -15,12 +17,12 @@ import java.util.Optional;
 public class BankHousingFinanceQuery implements IBankHousingFinance {
 
     private final EntityManager em;
-    public BankHousingFinanceQuery(EntityManager em){
+    public BankHousingFinanceQuery(EntityManager em) throws ApplicationContextException {
         this.em = em;
     }
 
     @Override
-    public List listBanksFinanceTotal() {
+    public List listBanksFinanceTotal() throws JDBCException {
         String query = "SELECT new skbaek.homework.demo.domain.ResDetailTotalAmountVO(" +
                 "m.year, SUM(m.amount), " +
                 "SUM(CASE WHEN m.bankName = '주택도시기금' THEN m.amount ELSE 0 END)," +
@@ -41,7 +43,7 @@ public class BankHousingFinanceQuery implements IBankHousingFinance {
     }
 
     @Override
-    public List supportFinanceTop(int year) {
+    public List supportFinanceTop(int year) throws JDBCException {
 
         Query result;
         if( Optional.of(year).get() == 0  ) { //값이 없을때 전체 조회
@@ -65,7 +67,7 @@ public class BankHousingFinanceQuery implements IBankHousingFinance {
     }
 
     @Override
-    public List supportFinanceAvgMaxMin(String bankName) {
+    public List supportFinanceAvgMaxMin(String bankName) throws JDBCException {
         String query = "SELECT new skbaek.homework.demo.domain.ResAvgVO(m.year, ROUND(AVG(amount),0) AS average) " +
                 "FROM BankHousingFinance  m " +
                 "GROUP BY m.bankName, m.year " +
@@ -78,7 +80,7 @@ public class BankHousingFinanceQuery implements IBankHousingFinance {
     }
 
     @Override
-    public List supportFinancePredict(RequestVO param) {
+    public List supportFinancePredict(RequestVO param) throws JDBCException {
         String query = "SELECT new skbaek.homework.demo.domain.ResPredictVO(m.amount, b.bankCode) " +
                 "FROM BankHousingFinance m, BankCode b " +
                 "WHERE m.bankName = :bankName " +

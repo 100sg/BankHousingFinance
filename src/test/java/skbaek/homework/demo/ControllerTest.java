@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -27,6 +28,7 @@ import skbaek.homework.demo.service.impl.BankService;
 import skbaek.homework.demo.service.impl.FileUploadServiceImpl;
 
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -51,6 +53,12 @@ public class ControllerTest {
     @MockBean
     private BankService bankService;
 
+    @MockBean
+    private BankRepository bankRepository;
+
+    @MockBean
+    private BankHousingFinanceRepository bankHousingFinanceRepository;
+
     @Test
     public void file_pasrsing_test() throws Exception {
         MockMultipartFile file = new MockMultipartFile("file",
@@ -58,9 +66,10 @@ public class ControllerTest {
 
         this.mockMvc.perform(MockMvcRequestBuilders
                 .multipart("/fileupload")
-                .file(file))
+                .file(file)
+                .characterEncoding("UTF-8"))
                 .andDo(print())
-                .andExpect(status().is(HttpStatus.CREATED.value()));
+                .andExpect(status().is(HttpStatus.OK.value()));
     }
 
     @Test
@@ -83,7 +92,7 @@ public class ControllerTest {
 
     @Test
     public void bank_top_test() throws Exception {
-        this.mockMvc.perform(get("/banks/finance/top")
+        this.mockMvc.perform(post("/banks/finance/top")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("utf-8")
                 .param("year","2007"))
@@ -93,7 +102,7 @@ public class ControllerTest {
 
     @Test
     public void bank_avd_test() throws Exception {
-        this.mockMvc.perform(get("/banks/finance/avg")
+        this.mockMvc.perform(post("/banks/finance/avg")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("utf-8")
                 .param("bankName", "국민은행"))
@@ -103,7 +112,7 @@ public class ControllerTest {
 
     @Test
     public void testGetPredictionOfBank() throws Exception {
-        this.mockMvc.perform(get("/banks/prediction")
+        this.mockMvc.perform(post("/banks/prediction")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("utf-8")
                 .param("bankName", "국민은행")

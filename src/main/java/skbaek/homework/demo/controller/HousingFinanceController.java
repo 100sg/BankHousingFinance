@@ -34,14 +34,8 @@ public class HousingFinanceController {
     @PostMapping("/fileupload")
     public ResponseEntity uploadFile(@RequestBody MultipartFile file) throws Exception {
         ApiResponseVO res = new ApiResponseVO();
-        try {
-            uploadService.upload(file);
-            res.setResultOK(HttpStatus.CREATED);
-        } catch (Exception e) {
-            res.setResult("FAIL");
-            res.setReason(e.getMessage());
-            e.printStackTrace();
-        }
+        uploadService.upload(file);
+        res.setResultOK(HttpStatus.CREATED);
         return ResponseEntity.ok( res );
     }
 
@@ -49,15 +43,7 @@ public class HousingFinanceController {
     public ResponseEntity bankList() throws Exception {
         ApiResponseVO<List<BankCode>> res = new ApiResponseVO<>();
         res.setTitle("주택금융 공급 기관 목록");
-
-        try {
-            res.setData( bankService.findAll() );
-        } catch (Exception e) {
-            res.setResult("FAIL");
-            res.setReason(e.getMessage());
-            e.printStackTrace();
-        }
-
+        res.setData( bankService.findAll() );
         return ResponseEntity.ok( res );
     }
 
@@ -65,13 +51,8 @@ public class HousingFinanceController {
     public ResponseEntity banksFinanceTotal() throws Exception {
         ApiResponseVO<List<ResDetailTotalAmountVO>> res = new ApiResponseVO<>();
         res.setTitle("연도별 주택금융 공급현황");
-        try {
-            res.setData(bankHousingFinanceService.getListBanksFinanceTotal());
-        } catch (Exception e) {
-            res.setResult("FAIL");
-            res.setReason(e.getMessage());
-            e.printStackTrace();
-        }
+        res.setData(bankHousingFinanceService.getListBanksFinanceTotal());
+        int a = 1/0;
         return ResponseEntity.ok( res );
     }
 
@@ -79,16 +60,10 @@ public class HousingFinanceController {
     public ResponseEntity bankFinanceTop(@RequestBody RequestVO param) throws Exception {
         ApiResponseVO<List<ResultTypeVO>> res = new ApiResponseVO<>();
         res.setTitle("연도별 최대 지원금액");
+        res.setData(bankHousingFinanceService.getBankFinanceTop(param));
 
-        try {
-            res.setData(bankHousingFinanceService.getBankFinanceTop(param));
-            if(res.getData().size() == 0 ) {
-                res.setReason(String.valueOf(param.getYear()) + "년도의 데이터는 없습니다.");
-            }
-        } catch (Exception e) {
-            res.setResult("FAIL");
-            res.setReason(e.getMessage());
-            e.printStackTrace();
+        if(res.getData().size() == 0 ) {
+            res.setReason(String.valueOf(param.getYear()) + "년도의 데이터는 없습니다.");
         }
 
         return ResponseEntity.ok(res);
@@ -97,15 +72,8 @@ public class HousingFinanceController {
     @PostMapping("/banks/finance/avg")
     public ResponseEntity supportFinanceAvgMaxMin(@RequestBody RequestVO param) throws Exception {
         ApiResponseVO<List<ResultTypeVO>> res = new ApiResponseVO<>();
-
-        try {
-            res.setBankResultOK(param.getBankName(), bankHousingFinanceService.getSupportFinanceAvgMaxMin(param));
-            res.setData(bankHousingFinanceService.getSupportFinanceAvgMaxMin(param));
-        } catch(Exception e) {
-            res.setResult("FAIL");
-            res.setReason(e.getMessage());
-            e.printStackTrace();
-        }
+        res.setBankResultOK(param.getBankName(), bankHousingFinanceService.getSupportFinanceAvgMaxMin(param));
+        res.setData(bankHousingFinanceService.getSupportFinanceAvgMaxMin(param));
         return ResponseEntity.ok(res);
     }
 
@@ -117,15 +85,9 @@ public class HousingFinanceController {
             res.setReason("입력한 월을 확인해 주세요.");
             return ResponseEntity.ok(res);
         }
-        try {
-            Map<String, Object> result = bankHousingFinanceService.getSupportFinancePredict(param);
-            res.setTitle("2018년도 기관별 주택금융 지원금액 예측");
-            res.setData(result);
-        } catch(Exception e) {
-            res.setResult("FAIL");
-            res.setReason(e.getMessage());
-            e.printStackTrace();
-        }
+        Map<String, Object> result = bankHousingFinanceService.getSupportFinancePredict(param);
+        res.setTitle("2018년도 기관별 주택금융 지원금액 예측");
+        res.setData(result);
         return ResponseEntity.ok(res);
     }
 

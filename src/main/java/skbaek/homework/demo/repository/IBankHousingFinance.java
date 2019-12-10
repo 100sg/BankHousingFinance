@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface IBankHousingFinance<T> {
 
-    List<T> listBanksFinanceTotal();
-    List<T> supportFinanceTop(int year);
-    List<T> supportFinanceAvgMaxMin(String bankName);
-    List<T> supportFinancePredict(RequestVO param);
+    List<T> listBanksFinanceTotal() throws Exception;
+    List<T> supportFinanceTop(int year) throws Exception;
+    List<T> supportFinanceAvgMaxMin(String bankName) throws Exception;
+    List<T> supportFinancePredict(RequestVO param) throws Exception;
 
 }
